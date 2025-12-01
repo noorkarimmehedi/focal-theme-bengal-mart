@@ -182,9 +182,17 @@
     }
   }
 
-  @media screen and (max-width: 749px) {
+  @media screen and (max-width: 767px) {
     .ai-product-grid-{{ ai_gen_id }} {
-      padding: {{ block.settings.section_padding | times: 0.7 }}px 16px;
+      padding: {{ block.settings.section_padding | times: 0.7 }}px 8px !important;
+      overflow-x: hidden !important;
+    }
+
+    .ai-product-grid-container-{{ ai_gen_id }} {
+      padding: 0 !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      overflow-x: hidden !important;
     }
 
     .ai-product-grid-container-{{ ai_gen_id }} {
