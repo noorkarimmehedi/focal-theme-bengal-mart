@@ -80,8 +80,8 @@
           "announcement_text_size": "normal",
           "autoplay": true,
           "cycle_speed": 5,
-          "background": "#f3ff34",
-          "text_color": "#282828",
+          "background": "#000000",
+          "text_color": "#f9f9f9",
           "button_background": "#282828",
           "button_text_color": "#ffffff"
         }
