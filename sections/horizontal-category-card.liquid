@@ -3,10 +3,22 @@
   Modern premium design with expand-on-hover animation
 {% endcomment %}
 
+{% assign bg_color = section.settings.background_color | default: '#fafafa' %}
+{% assign heading_color = section.settings.heading_color | default: '#1a1a1a' %}
+{% assign description_color = section.settings.description_color | default: '#666' %}
+
 <style>
-  .category-section {
+  .category-section-{{ section.id }} {
     padding: 80px 0;
-    background: #fafafa;
+    background: {{ bg_color }};
+  }
+
+  .category-section-{{ section.id }} .category-title {
+    color: {{ heading_color }};
+  }
+
+  .category-section-{{ section.id }} .category-description {
+    color: {{ description_color }};
   }
 
   .category-container {
@@ -207,7 +219,7 @@
   }
 
   @media (max-width: 767px) {
-    .category-section {
+    .category-section-{{ section.id }} {
       padding: 60px 0;
       overflow-x: hidden !important;
     }
@@ -267,7 +279,7 @@
   }
 </style>
 
-<section class="category-section">
+<section class="category-section category-section-{{ section.id }}">
   <div class="category-container">
     <div class="category-header">
       <h2 class="category-title">{{ section.settings.heading }}</h2>
@@ -323,6 +335,32 @@
 {
   "name": "Category Carousel",
   "settings": [
+    {
+      "type": "header",
+      "content": "Section Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#fafafa"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
     {
       "type": "text",
       "id": "heading",
