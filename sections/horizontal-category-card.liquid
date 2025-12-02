@@ -129,7 +129,6 @@
   .category-tag {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
     padding: 6px 14px;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 20px;
@@ -138,11 +137,6 @@
     color: #1a1a1a;
     margin-bottom: 12px;
     backdrop-filter: blur(10px);
-  }
-
-  .category-tag-icon {
-    width: 14px;
-    height: 14px;
   }
 
   .category-card-title {
@@ -291,11 +285,6 @@
               <div class="category-card-overlay">
                 {% if block.settings.tag %}
                   <div class="category-tag">
-                    {% if block.settings.icon %}
-                      <svg class="category-tag-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        {{ block.settings.icon }}
-                      </svg>
-                    {% endif %}
                     {{ block.settings.tag }}
                   </div>
                 {% endif %}
@@ -372,12 +361,6 @@
           "label": "Tag"
         },
         {
-          "type": "html",
-          "id": "icon",
-          "label": "Icon SVG Path",
-          "info": "Paste SVG path data (e.g., <path d='M12 2L2 7l10 5 10-5-10-5z'/>)"
-        },
-        {
           "type": "url",
           "id": "link",
           "label": "Link"
@@ -393,8 +376,7 @@
           "type": "category",
           "settings": {
             "title": "Women's Fashion",
-            "tag": "Trending",
-            "icon": "<path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/>"
+            "tag": "Trending"
           }
         },
         {

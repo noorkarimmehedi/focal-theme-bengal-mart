@@ -152,36 +152,36 @@
         "category_MLU7Tz": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/imgi_95_AnkitaJain29Mar25_1762.jpg",
             "title": "Women's Fashion",
             "tag": "Trending",
-            "icon": "<path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"></path>",
             "link": ""
           }
         },
         "category_txXdhB": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/imgi_94_AnkitaJain29Mar25_1757.jpg",
             "title": "Men's Collection",
             "tag": "New Arrivals",
-            "icon": "",
             "link": ""
           }
         },
         "category_jawbNi": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/imgi_12_AnkitaJain29Mar25_1757.jpg",
             "title": "Accessories",
             "tag": "Best Sellers",
-            "icon": "",
             "link": ""
           }
         },
         "category_cjRR9B": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/imgi_11_AnkitaJain29Mar25_1764.jpg",
             "title": "Summer Styles",
             "tag": "Seasonal",
-            "icon": "",
             "link": ""
           }
         }
