@@ -1,0 +1,370 @@
+{% comment %}
+  Swipeable Horizontal Category Section
+  Modern premium design with tall rounded cards
+{% endcomment %}
+
+<style>
+  .category-section {
+    padding: 80px 0;
+    background: #fafafa;
+  }
+
+  .category-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 48px;
+    gap: 40px;
+  }
+
+  .category-title {
+    font-size: 42px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .category-description {
+    max-width: 420px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #666;
+    text-align: right;
+  }
+
+  .category-scroll-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    margin: 0 -24px;
+    padding: 0 24px;
+  }
+
+  .category-scroll-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-grid {
+    display: flex;
+    gap: 20px;
+    padding-bottom: 8px;
+  }
+
+  .category-card {
+    flex: 0 0 280px;
+    height: 420px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .category-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  .category-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .category-card:hover .category-card-image {
+    transform: scale(1.08);
+  }
+
+  .category-card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 28px 24px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
+  }
+
+  .category-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+    backdrop-filter: blur(10px);
+  }
+
+  .category-tag-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .category-card-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .category-cta-card {
+    flex: 0 0 280px;
+    height: 420px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .category-cta-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .category-cta-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+  }
+
+  .category-cta-card:hover::before {
+    opacity: 1;
+  }
+
+  .category-cta-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s ease;
+  }
+
+  .category-cta-card:hover .category-cta-icon {
+    transform: scale(1.1) rotate(90deg);
+  }
+
+  .category-cta-text {
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .category-section {
+      padding: 60px 0;
+    }
+
+    .category-header {
+      flex-direction: column;
+      margin-bottom: 32px;
+      gap: 16px;
+    }
+
+    .category-title {
+      font-size: 32px;
+    }
+
+    .category-description {
+      text-align: left;
+      max-width: 100%;
+    }
+
+    .category-card,
+    .category-cta-card {
+      flex: 0 0 240px;
+      height: 360px;
+    }
+
+    .category-card-title {
+      font-size: 20px;
+    }
+  }
+</style>
+
+<section class="category-section">
+  <div class="category-container">
+    <div class="category-header">
+      <h2 class="category-title">{{ section.settings.heading }}</h2>
+      <p class="category-description">{{ section.settings.description }}</p>
+    </div>
+
+    <div class="category-scroll-wrapper">
+      <div class="category-grid">
+        {% for block in section.blocks %}
+          {% if block.type == 'category' %}
+            <a href="{{ block.settings.link }}" class="category-card">
+              {% if block.settings.image %}
+                <img 
+                  src="{{ block.settings.image | img_url: '600x' }}" 
+                  alt="{{ block.settings.title }}"
+                  class="category-card-image"
+                  loading="lazy"
+                >
+              {% else %}
+                <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+              {% endif %}
+              
+              <div class="category-card-overlay">
+                {% if block.settings.tag %}
+                  <div class="category-tag">
+                    {% if block.settings.icon %}
+                      <svg class="category-tag-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        {{ block.settings.icon }}
+                      </svg>
+                    {% endif %}
+                    {{ block.settings.tag }}
+                  </div>
+                {% endif %}
+                <h3 class="category-card-title">{{ block.settings.title }}</h3>
+              </div>
+            </a>
+          {% endif %}
+        {% endfor %}
+
+        <a href="{{ section.settings.view_all_link }}" class="category-cta-card">
+          <div class="category-cta-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="16"/>
+              <line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+          </div>
+          <p class="category-cta-text">{{ section.settings.cta_text }}</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Category Carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop by Category"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Discover our curated collections designed to inspire and elevate your everyday style."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Text",
+      "default": "View All"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Category Name"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag"
+        },
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon SVG Path",
+          "info": "Paste SVG path data (e.g., <path d='M12 2L2 7l10 5 10-5-10-5z'/>)"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category Carousel",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "Women's Fashion",
+            "tag": "Trending",
+            "icon": "<path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/>"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Men's Collection",
+            "tag": "New Arrivals"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Accessories",
+            "tag": "Best Sellers"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Summer Styles",
+            "tag": "Seasonal"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
