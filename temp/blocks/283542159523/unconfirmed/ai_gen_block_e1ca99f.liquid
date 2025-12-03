@@ -1,6 +1,459 @@
+{% doc %}
+  @prompt
+    “Create a clean product showcase section similar to a modern fashion website.
+    Use a large rounded-rectangle card with soft, diffused shadow behind it.
+    Place the product image inside the card on the right side — no background removal needed, just a clean cutout image.
+    On the left side inside the card, add minimal text: product title, short line, and a small CTA link.
+    Keep the colors neutral (white/light gray), spacing clean, and overall layout premium and minimal.”, i have uploaded a removed background product image. the product details should in the top and a little bit below of the image
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-product-showcase-{{ ai_gen_id }} {
+    width: 100%;
+    padding: 40px 20px;
+    background-color: {{ block.settings.section_background }};
+  }
+
+  .ai-product-showcase-container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.card_max_width }}px;
+    margin: 0 auto;
+  }
+
+  .ai-product-showcase-card-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    background-color: {{ block.settings.card_background }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    box-shadow: 0 {{ block.settings.shadow_offset_y }}px {{ block.settings.shadow_blur }}px {{ block.settings.shadow_spread }}px {{ block.settings.shadow_color }};
+    overflow: hidden;
+    position: relative;
+  }
+
+  .ai-product-showcase-content-{{ ai_gen_id }} {
+    padding: {{ block.settings.content_padding_top }}px 60px {{ block.settings.content_padding_bottom }}px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 2;
+    position: relative;
+  }
+
+  .ai-product-showcase-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.text_color }};
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .ai-product-showcase-divider-{{ ai_gen_id }} {
+    width: {{ block.settings.divider_width }}px;
+    height: {{ block.settings.divider_height }}px;
+    background-color: {{ block.settings.divider_color }};
+    margin: 0;
+  }
+
+  .ai-product-showcase-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_size }}px;
+    color: {{ block.settings.description_color }};
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .ai-product-showcase-cta-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: {{ block.settings.cta_size }}px;
+    color: {{ block.settings.cta_color }};
+    text-decoration: none;
+    font-weight: 500;
+    transition: gap 0.3s ease;
+    align-self: flex-start;
+  }
+
+  .ai-product-showcase-cta-{{ ai_gen_id }}:hover {
+    gap: 12px;
+  }
+
+  .ai-product-showcase-cta-arrow-{{ ai_gen_id }} {
+    width: 16px;
+    height: 16px;
+    stroke: {{ block.settings.cta_color }};
+  }
+
+  .ai-product-showcase-image-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 40px {{ block.settings.image_padding_bottom }}px;
+    position: relative;
+  }
+
+  .ai-product-showcase-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-height: {{ block.settings.image_max_height }}px;
+  }
+
+  .ai-product-showcase-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .ai-product-showcase-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+    opacity: 0.3;
+  }
+
+  .ai-product-showcase-empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-product-showcase-{{ ai_gen_id }} {
+      padding: 20px 15px;
+    }
+
+    .ai-product-showcase-content-{{ ai_gen_id }} {
+      padding: 30px 20px 20px;
+    }
+
+    .ai-product-showcase-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.8 }}px;
+    }
+
+    .ai-product-showcase-image-wrapper-{{ ai_gen_id }} {
+      padding: 0 20px 30px;
+    }
+
+    .ai-product-showcase-image-{{ ai_gen_id }} {
+      max-height: {{ block.settings.image_max_height | times: 0.7 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-product-showcase-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-product-showcase-container-{{ ai_gen_id }}">
+    <div class="ai-product-showcase-card-{{ ai_gen_id }}">
+      <div class="ai-product-showcase-content-{{ ai_gen_id }}">
+        {% if block.settings.product_title != blank %}
+          <h2 class="ai-product-showcase-title-{{ ai_gen_id }}">
+            {{ block.settings.product_title }}
+          </h2>
+        {% endif %}
+
+        {% if block.settings.show_divider %}
+          <div class="ai-product-showcase-divider-{{ ai_gen_id }}"></div>
+        {% endif %}
+
+        {% if block.settings.product_description != blank %}
+          <div class="ai-product-showcase-description-{{ ai_gen_id }}">
+            {{ block.settings.product_description }}
+          </div>
+        {% endif %}
+
+        {% if block.settings.cta_text != blank and block.settings.cta_link != blank %}
+          <a href="{{ block.settings.cta_link }}" class="ai-product-showcase-cta-{{ ai_gen_id }}">
+            {{ block.settings.cta_text }}
+            <svg class="ai-product-showcase-cta-arrow-{{ ai_gen_id }}" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 8H15M15 8L8 1M15 8L8 15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="ai-product-showcase-image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.product_image %}
+          <img
+            src="{{ block.settings.product_image | image_url: width: 1200 }}"
+            alt="{{ block.settings.product_image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.product_image.width }}"
+            height="{{ block.settings.product_image.height }}"
+            class="ai-product-showcase-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-product-showcase-placeholder-{{ ai_gen_id }}">
+            {{ 'product-1' | placeholder_svg_tag }}
+            <div class="ai-product-showcase-empty-state-{{ ai_gen_id }}">
+              Add a product image
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Product showcase",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "product_title",
+      "label": "Product title",
+      "default": "Premium Collection"
+    },
+    {
+      "type": "textarea",
+      "id": "product_description",
+      "label": "Description",
+      "default": "Discover our latest premium collection featuring timeless designs and exceptional quality."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product image"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "content_padding_top",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Content top padding",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "content_padding_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Content bottom padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "image_padding_bottom",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Image bottom padding",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "image_max_height",
+      "min": 300,
+      "max": 800,
+      "step": 50,
+      "unit": "px",
+      "label": "Image maximum height",
+      "default": 500
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "range",
+      "id": "card_max_width",
+      "min": 600,
+      "max": 1400,
+      "step": 50,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 900
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Section background",
+      "default": "#f7f7f7"
+    },
+    {
+      "type": "header",
+      "content": "Shadow"
+    },
+    {
+      "type": "range",
+      "id": "shadow_offset_y",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Offset Y",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "shadow_blur",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Blur",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "shadow_spread",
+      "min": -20,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Spread",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "shadow_color",
+      "label": "Shadow color",
+      "default": "rgba(0, 0, 0, 0.08)"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 36
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Title color",
+      "default": "#1c1c1c"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "cta_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "CTA size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "cta_color",
+      "label": "CTA color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Divider"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show divider line",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "divider_width",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Width",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "divider_height",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "label": "Thickness",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product showcase"
+    }
+  ]
+}
 {% endschema %}
