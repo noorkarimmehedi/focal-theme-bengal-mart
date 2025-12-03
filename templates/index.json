@@ -190,6 +190,10 @@
       ],
       "settings": {}
     },
+    "176476843760369417": {
+      "type": "_blocks",
+      "settings": {}
+    },
     "featured-collections": {
       "type": "featured-collections",
       "blocks": {
@@ -652,6 +656,7 @@
     "slideshow",
     "1764588401a77ff989",
     "176474831120bb5e68",
+    "176476843760369417",
     "featured-collections",
     "horizontal_category_card_nh8rG6",
     "image-with-text",
