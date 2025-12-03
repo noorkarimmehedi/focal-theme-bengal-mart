@@ -1,6 +1,620 @@
+{% doc %}
+  @prompt
+    build a scrolling text or logo section for me. continuously scrolling from right o left and everything should be cutomizable from speed to font to size and color
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-scrolling-text-{{ ai_gen_id }} {
+    width: 100%;
+    overflow: hidden;
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding_vertical }}px 0;
+    position: relative;
+  }
+
+  .ai-scrolling-text-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    width: fit-content;
+    animation: ai-scroll-{{ ai_gen_id }} {{ block.settings.scroll_speed }}s linear infinite;
+  }
+
+  .ai-scrolling-text-item-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    padding: 0 {{ block.settings.item_spacing }}px;
+  }
+
+  .ai-scrolling-text-content-{{ ai_gen_id }} {
+    font-size: {{ block.settings.font_size }}px;
+    color: {{ block.settings.text_color }};
+    font-weight: {{ block.settings.font_weight }};
+    text-transform: {{ block.settings.text_transform }};
+    letter-spacing: {{ block.settings.letter_spacing }}px;
+  }
+
+  .ai-scrolling-text-image-{{ ai_gen_id }} {
+    height: {{ block.settings.logo_height }}px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .ai-scrolling-text-separator-{{ ai_gen_id }} {
+    display: inline-block;
+    margin: 0 {{ block.settings.separator_spacing }}px;
+    color: {{ block.settings.separator_color }};
+    font-size: {{ block.settings.separator_size }}px;
+  }
+
+  @keyframes ai-scroll-{{ ai_gen_id }} {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .ai-scrolling-text-{{ ai_gen_id }}:hover .ai-scrolling-text-wrapper-{{ ai_gen_id }} {
+    {% if block.settings.pause_on_hover %}
+      animation-play-state: paused;
+    {% endif %}
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-scrolling-text-content-{{ ai_gen_id }} {
+      font-size: {{ block.settings.font_size | times: 0.8 }}px;
+    }
+
+    .ai-scrolling-text-image-{{ ai_gen_id }} {
+      height: {{ block.settings.logo_height | times: 0.8 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-scrolling-text-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-scrolling-text-wrapper-{{ ai_gen_id }}">
+    {% for i in (1..2) %}
+      {% for item in (1..10) %}
+        {% assign item_key = 'item_' | append: item %}
+        {% assign type_key = 'item_' | append: item | append: '_type' %}
+        {% assign text_key = 'item_' | append: item | append: '_text' %}
+        {% assign image_key = 'item_' | append: item | append: '_image' %}
+        
+        {% assign item_type = block.settings[type_key] %}
+        {% assign item_text = block.settings[text_key] %}
+        {% assign item_image = block.settings[image_key] %}
+        
+        {% if item_type == 'text' and item_text != blank %}
+          <div class="ai-scrolling-text-item-{{ ai_gen_id }}">
+            <span class="ai-scrolling-text-content-{{ ai_gen_id }}">{{ item_text }}</span>
+            {% if block.settings.show_separator %}
+              <span class="ai-scrolling-text-separator-{{ ai_gen_id }}">{{ block.settings.separator_symbol }}</span>
+            {% endif %}
+          </div>
+        {% elsif item_type == 'logo' and item_image != blank %}
+          <div class="ai-scrolling-text-item-{{ ai_gen_id }}">
+            <img
+              src="{{ item_image | image_url: height: 200 }}"
+              alt="{{ item_image.alt | escape }}"
+              class="ai-scrolling-text-image-{{ ai_gen_id }}"
+              loading="lazy"
+              width="{{ item_image.width }}"
+              height="{{ item_image.height }}"
+            >
+            {% if block.settings.show_separator %}
+              <span class="ai-scrolling-text-separator-{{ ai_gen_id }}">{{ block.settings.separator_symbol }}</span>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Scrolling text",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "unit": "s",
+      "label": "Scroll speed",
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Text style"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 12,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "300",
+          "label": "Light"
+        },
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "text_transform",
+      "label": "Text transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Letter spacing",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Logo style"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "min": 20,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Logo height",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "item_spacing",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Item spacing",
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "show_separator",
+      "label": "Show separator",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "separator_symbol",
+      "label": "Separator symbol",
+      "default": "•"
+    },
+    {
+      "type": "color",
+      "id": "separator_color",
+      "label": "Separator color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "separator_size",
+      "min": 8,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Separator size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "separator_spacing",
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Separator spacing",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Item 1"
+    },
+    {
+      "type": "select",
+      "id": "item_1_type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "text",
+          "label": "Text"
+        },
+        {
+          "value": "logo",
+          "label": "Logo"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "text",
+      "id": "item_1_text",
+      "label": "Text",
+      "default": "Free Shipping"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_1_image",
+      "label": "Logo"
+    },
+    {
+      "type": "header",
+      "content": "Item 2"
+    },
+    {
+      "type": "select",
+      "id": "item_2_type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "text",
+          "label": "Text"
+        },
+        {
+          "value": "logo",
+          "label": "Logo"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "text",
+      "id": "item_2_text",
+      "label": "Text",
+      "default": "Fast Delivery"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_2_image",
+      "label": "Logo"
+    },
+    {
+      "type": "header",
+      "content": "Item 3"
+    },
+    {
+      "type": "select",
+      "id": "item_3_type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "text",
+          "label": "Text"
+        },
+        {
+          "value": "logo",
+          "label": "Logo"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "text",
+      "id": "item_3_text",
+      "label": "Text",
+      "default": "Easy Returns"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_3_image",
+      "label": "Logo"
+    },
+    {
+      "type": "header",
+      "content": "Item 4"
+    },
+    {
+      "type": "select",
+      "id": "item_4_type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "text",
+          "label": "Text"
+        },
+        {
+          "value": "logo",
+          "label": "Logo"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "text",
+      "id": "item_4_text",
+      "label": "Text",
+      "default": "24/7 Support"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_4_image",
+      "label": "Logo"
+    },
+    {
+      "type": "header",
+      "content": "Item 5"
+    },
+    {
+      "type": "select",
+      "id": "item_5_type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "text",
+          "label": "Text"
+        },
+        {
+          "value": "logo",
+          "label": "Logo"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "text",
+      "id": "item_5_text",
+      "label": "Text",
+      "default": "Secure Payment"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_5_image",
+      "label": "Logo"
+    },
+    {
+      "type": "header",
+      "content": "Item 6"
+    },
+    {
+      "type": "select",
+      "id": "item_6_type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "text",
+          "label": "Text"
+        },
+        {
+          "value": "logo",
+          "label": "Logo"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "text",
+      "id": "item_6_text",
+      "label": "Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_6_image",
+      "label": "Logo"
+    },
+    {
+      "type": "header",
+      "content": "Item 7"
+    },
+    {
+      "type": "select",
+      "id": "item_7_type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "text",
+          "label": "Text"
+        },
+        {
+          "value": "logo",
+          "label": "Logo"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "text",
+      "id": "item_7_text",
+      "label": "Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_7_image",
+      "label": "Logo"
+    },
+    {
+      "type": "header",
+      "content": "Item 8"
+    },
+    {
+      "type": "select",
+      "id": "item_8_type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "text",
+          "label": "Text"
+        },
+        {
+          "value": "logo",
+          "label": "Logo"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "text",
+      "id": "item_8_text",
+      "label": "Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_8_image",
+      "label": "Logo"
+    },
+    {
+      "type": "header",
+      "content": "Item 9"
+    },
+    {
+      "type": "select",
+      "id": "item_9_type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "text",
+          "label": "Text"
+        },
+        {
+          "value": "logo",
+          "label": "Logo"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "text",
+      "id": "item_9_text",
+      "label": "Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_9_image",
+      "label": "Logo"
+    },
+    {
+      "type": "header",
+      "content": "Item 10"
+    },
+    {
+      "type": "select",
+      "id": "item_10_type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "text",
+          "label": "Text"
+        },
+        {
+          "value": "logo",
+          "label": "Logo"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "text",
+      "id": "item_10_text",
+      "label": "Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_10_image",
+      "label": "Logo"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrolling text"
+    }
+  ]
+}
 {% endschema %}
