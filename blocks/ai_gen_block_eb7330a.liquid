@@ -1,13 +1,3 @@
-{% doc %}
-  @prompt
-    generate a modern collection section for me which should be fit in both mobile and desktop. also the text should have animation and UI should be translucent glass morphism UI , should have the option to move the Glass Morphism card for the product name price . eveyrhing should be customizable from font to color to radius, in mobile version there should be two product per row and in desktop version there should be four products in every row , in mobile version the Glass morphism card's card text size isn't optimised for mobile version 
-    , can you reduce the left and right side gap a little on desktop version , still so much gap on left and right side on desktop version , can you reduce a little bit more on desktop version on left and right side
-    , applied mobile optimizations: 12px container padding, removed product margins, prevented horizontal scrolling, max width control
-    , desktop: reduced left/right padding to 24px
-    , added plus icon add to cart button on glass card right side center
-    , updated to work with Focal theme cart-count component
-{% enddoc %}
-
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
 
 {% style %}
@@ -16,17 +6,14 @@
     background-color: {{ block.settings.background_color }};
     overflow: hidden;
   }
-
   .ai-glass-collection__container-{{ ai_gen_id }} {
     max-width: {{ block.settings.container_width }}px;
     margin: 0 auto;
   }
-
   .ai-glass-collection__header-{{ ai_gen_id }} {
     text-align: {{ block.settings.text_alignment }};
     margin-bottom: {{ block.settings.header_spacing }}px;
   }
-
   .ai-glass-collection__title-{{ ai_gen_id }} {
     font-family: {{ block.settings.heading_font.family }}, {{ block.settings.heading_font.fallback_families }};
     font-weight: {{ block.settings.heading_font.weight }};
@@ -36,14 +23,12 @@
     line-height: 1.2;
     overflow: hidden;
   }
-
   .ai-glass-collection__title-text-{{ ai_gen_id }} {
     display: inline-block;
     opacity: 0;
     transform: translateY(30px);
     animation: ai-glass-slide-up-{{ ai_gen_id }} 0.8s ease-out forwards;
   }
-
   .ai-glass-collection__description-{{ ai_gen_id }} {
     font-family: {{ block.settings.body_font.family }}, {{ block.settings.body_font.fallback_families }};
     font-weight: {{ block.settings.body_font.weight }};
@@ -54,14 +39,12 @@
     transform: translateY(20px);
     animation: ai-glass-slide-up-{{ ai_gen_id }} 0.8s ease-out 0.2s forwards;
   }
-
   @keyframes ai-glass-slide-up-{{ ai_gen_id }} {
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
-
   .ai-glass-collection__grid-{{ ai_gen_id }} {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -75,7 +58,6 @@
     transform: translateY(30px);
     animation: ai-glass-fade-in-{{ ai_gen_id }} 0.6s ease-out forwards;
   }
-
   .ai-glass-collection__product-{{ ai_gen_id }}:nth-child(1) { animation-delay: 0.1s; }
   .ai-glass-collection__product-{{ ai_gen_id }}:nth-child(2) { animation-delay: 0.2s; }
   .ai-glass-collection__product-{{ ai_gen_id }}:nth-child(3) { animation-delay: 0.3s; }
@@ -89,14 +71,12 @@
       transform: translateY(0);
     }
   }
-
   .ai-glass-collection__product-link-{{ ai_gen_id }} {
     display: block;
     text-decoration: none;
     color: inherit;
     height: 100%;
   }
-
   .ai-glass-collection__image-wrapper-{{ ai_gen_id }} {
     position: relative;
     width: 100%;
@@ -105,7 +85,6 @@
     border-radius: {{ block.settings.image_border_radius }}px;
     background-color: {{ block.settings.image_placeholder_color }};
   }
-
   .ai-glass-collection__image-{{ ai_gen_id }} {
     position: absolute;
     top: 0;
@@ -113,13 +92,12 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s ease;
+    transition: transform 0.6s cubic-bezier(.23,1.01,.32,1), filter 0.4s cubic-bezier(.23,1.01,.32,1);
   }
-
   .ai-glass-collection__product-link-{{ ai_gen_id }}:hover .ai-glass-collection__image-{{ ai_gen_id }} {
     transform: scale({{ block.settings.image_hover_scale | divided_by: 10.0 }});
+    filter: brightness(0.95) saturate(110%);
   }
-
   .ai-glass-collection__image-placeholder-{{ ai_gen_id }} {
     position: absolute;
     top: 0;
@@ -130,13 +108,13 @@
     align-items: center;
     justify-content: center;
   }
-
   .ai-glass-collection__image-placeholder-{{ ai_gen_id }} svg {
     width: 60%;
     height: 60%;
     opacity: 0.3;
   }
 
+  /* ------- APPLE LIQUID GLASS CARD ------- */
   .ai-glass-collection__info-{{ ai_gen_id }} {
     position: {{ block.settings.card_position }};
     {% if block.settings.card_position == 'absolute' %}
@@ -146,34 +124,35 @@
     {% else %}
       margin-top: {{ block.settings.card_spacing }}px;
     {% endif %}
-    background: {{ block.settings.glass_background }};
-    backdrop-filter: blur({{ block.settings.glass_blur }}px);
-    -webkit-backdrop-filter: blur({{ block.settings.glass_blur }}px);
-    border: {{ block.settings.glass_border_width }}px solid {{ block.settings.glass_border_color }};
-    border-radius: {{ block.settings.card_border_radius }}px;
-    padding: {{ block.settings.card_padding }}px;
-    box-shadow: {{ block.settings.glass_shadow_x }}px {{ block.settings.glass_shadow_y }}px {{ block.settings.glass_shadow_blur }}px {{ block.settings.glass_shadow_color }};
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(26px) saturate(130%);
+    -webkit-backdrop-filter: blur(26px) saturate(130%);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.28);
+    box-shadow: 0 6px 32px 0 rgba(62, 80, 99, 0.09), 0 1.5px 5px 0 rgba(80, 100, 120, 0.07) !important;
+    transition: 
+      background 0.25s cubic-bezier(.4,0,.2,1), 
+      box-shadow 0.3s cubic-bezier(.4,0,.2,1),
+      transform 0.25s cubic-bezier(.4,0,.2,1);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: 12px;
+    /* For darkest backgrounds, use slightly more white: rgba(255,255,255,0.22) */
   }
-
   .ai-glass-collection__product-link-{{ ai_gen_id }}:hover .ai-glass-collection__info-{{ ai_gen_id }} {
-    transform: translateY(-{{ block.settings.card_hover_lift }}px);
-    box-shadow: {{ block.settings.glass_shadow_x }}px {{ block.settings.glass_shadow_y | plus: 4 }}px {{ block.settings.glass_shadow_blur | plus: 8 }}px {{ block.settings.glass_shadow_color }};
+    background: rgba(255,255,255,0.22);
+    box-shadow: 0 10px 40px 3px rgba(62,80,99,0.15), 0 1.5px 8px 0 rgba(80,100,120,0.10) !important;
+    transform: translateY(-6px) scale(1.01);
   }
-
   .ai-glass-collection__info-content-{{ ai_gen_id }} {
     flex: 1;
     min-width: 0;
   }
-
   .ai-glass-collection__product-title-{{ ai_gen_id }} {
     font-family: {{ block.settings.product_title_font.family }}, {{ block.settings.product_title_font.fallback_families }};
     font-weight: {{ block.settings.product_title_font.weight }};
-    font-size: {{ block.settings.product_title_size }}px;
+    font-size: clamp(12px, {{ block.settings.product_title_size }}px, 2vw);
     color: {{ block.settings.product_title_color }};
     margin: 0 0 {{ block.settings.title_price_spacing }}px;
     line-height: 1.3;
@@ -183,26 +162,22 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
-
   .ai-glass-collection__price-wrapper-{{ ai_gen_id }} {
     display: flex;
     align-items: center;
     gap: 8px;
     flex-wrap: wrap;
   }
-
   .ai-glass-collection__price-{{ ai_gen_id }} {
     font-family: {{ block.settings.price_font.family }}, {{ block.settings.price_font.fallback_families }};
     font-weight: {{ block.settings.price_font.weight }};
-    font-size: {{ block.settings.price_size }}px;
+    font-size: clamp(11px, {{ block.settings.price_size }}px, 2vw);
     color: {{ block.settings.price_color }};
     margin: 0;
   }
-
   .ai-glass-collection__price--sale-{{ ai_gen_id }} {
     color: {{ block.settings.sale_price_color }};
   }
-
   .ai-glass-collection__compare-price-{{ ai_gen_id }} {
     font-size: {{ block.settings.price_size | times: 0.85 }}px;
     color: {{ block.settings.compare_price_color }};
@@ -222,66 +197,61 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
     padding: 0;
     position: relative;
     z-index: 5;
+    box-shadow: 0 1.5px 8px rgba(80,100,120,0.08);
   }
-
   .ai-glass-collection__add-to-cart-{{ ai_gen_id }}:hover {
     background-color: {{ block.settings.atc_button_bg_hover }};
     transform: scale(1.1);
   }
-
   .ai-glass-collection__add-to-cart-{{ ai_gen_id }}:active {
-    transform: scale(0.95);
+    transform: scale(0.97);
   }
-
   .ai-glass-collection__add-to-cart-{{ ai_gen_id }} svg {
     width: {{ block.settings.atc_icon_size }}px;
     height: {{ block.settings.atc_icon_size }}px;
     stroke: {{ block.settings.atc_icon_color }};
     stroke-width: 2;
     fill: none;
-    transition: stroke 0.3s ease;
+    transition: stroke 0.3s cubic-bezier(.4,0,.2,1);
   }
-
   .ai-glass-collection__add-to-cart-{{ ai_gen_id }}:hover svg {
     stroke: {{ block.settings.atc_icon_color_hover }};
   }
-
   .ai-glass-collection__add-to-cart-{{ ai_gen_id }}.is-loading {
     pointer-events: none;
   }
-
   .ai-glass-collection__add-to-cart-{{ ai_gen_id }}.is-loading svg {
     animation: ai-glass-spin-{{ ai_gen_id }} 1s linear infinite;
   }
-
   .ai-glass-collection__add-to-cart-{{ ai_gen_id }}.is-added svg {
     stroke: {{ block.settings.atc_success_color }};
   }
-
   @keyframes ai-glass-spin-{{ ai_gen_id }} {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+    from { transform: rotate(0deg);}
+    to { transform: rotate(360deg);}
   }
 
+  /* Apple style badge */
   .ai-glass-collection__badge-{{ ai_gen_id }} {
     position: absolute;
     top: {{ block.settings.badge_position_top }}px;
     right: {{ block.settings.badge_position_right }}px;
-    background-color: {{ block.settings.badge_background }};
-    color: {{ block.settings.badge_text_color }};
+    background: 
+      linear-gradient(97deg,rgba(255,100,100,0.80) 10%,rgba(255,27,27,0.7) 90%);
+    color: #fff;
     padding: {{ block.settings.badge_padding_vertical }}px {{ block.settings.badge_padding_horizontal }}px;
-    border-radius: {{ block.settings.badge_border_radius }}px;
+    border-radius: 99px;
     font-size: {{ block.settings.badge_font_size }}px;
     font-weight: 600;
     z-index: 2;
+    box-shadow: 0 1.5px 6px 0 rgba(0,0,0,0.10);
+    border: 1px solid rgba(255,255,255,0.25);
+    letter-spacing: 0.01em;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.12);
   }
 
   .ai-glass-collection__empty-{{ ai_gen_id }} {
@@ -291,13 +261,12 @@
     font-size: {{ block.settings.description_size }}px;
   }
 
-  /* Desktop optimization - reduced left/right gaps to 24px */
+  /* Desktop: reduce left/right gap even further (16px) */
   @media screen and (min-width: 990px) {
     .ai-glass-collection-{{ ai_gen_id }} {
-      padding-left: 24px !important;
-      padding-right: 24px !important;
+      padding-left: 16px !important;
+      padding-right: 16px !important;
     }
-
     .ai-glass-collection__container-{{ ai_gen_id }} {
       max-width: 100% !important;
       padding: 0 !important;
@@ -309,19 +278,15 @@
     .ai-glass-collection__grid-{{ ai_gen_id }} {
       grid-template-columns: repeat(3, 1fr);
     }
-
     .ai-glass-collection__title-{{ ai_gen_id }} {
       font-size: {{ block.settings.heading_size | times: 0.8 }}px;
     }
-
     .ai-glass-collection__description-{{ ai_gen_id }} {
       font-size: {{ block.settings.description_size | times: 0.9 }}px;
     }
   }
-
-  /* Mobile breakpoint - OPTIMIZED with 12px padding */
+  /* Mobile OPTIMIZED with 12px padding, 2 per row, smaller Glass font, no margins */
   @media screen and (max-width: 767px) {
-    /* Container Padding: Set to 12px on mobile */
     .ai-glass-collection-{{ ai_gen_id }} {
       padding-left: 12px !important;
       padding-right: 12px !important;
@@ -329,8 +294,6 @@
       padding-bottom: {{ block.settings.section_padding_bottom | times: 0.6 }}px !important;
       overflow-x: hidden !important;
     }
-
-    /* Max Width Control: Set container to 100% width on mobile */
     .ai-glass-collection__container-{{ ai_gen_id }} {
       max-width: 100% !important;
       width: 100% !important;
@@ -338,8 +301,6 @@
       padding: 0 !important;
       overflow-x: hidden !important;
     }
-
-    /* Grid optimizations - 2 products per row with minimal gap */
     .ai-glass-collection__grid-{{ ai_gen_id }} {
       grid-template-columns: repeat(2, 1fr) !important;
       gap: {{ block.settings.grid_gap | times: 0.5 }}px !important;
@@ -349,44 +310,31 @@
       width: 100% !important;
       overflow-x: hidden !important;
     }
-
-    /* Removed Product Margins */
-    .ai-glass-collection__product-{{ ai_gen_id }} {
+    .ai-glass-collection__product-{{ ai_gen_id }},
+    .ai-glass-collection__product-link-{{ ai_gen_id }} {
       margin: 0 !important;
       padding: 0 !important;
       width: 100% !important;
     }
-
-    .ai-glass-collection__product-link-{{ ai_gen_id }} {
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-
     .ai-glass-collection__image-wrapper-{{ ai_gen_id }} {
       margin: 0 !important;
       border-radius: {{ block.settings.image_border_radius | times: 0.75 }}px !important;
     }
-
-    /* Header text size optimization */
     .ai-glass-collection__title-{{ ai_gen_id }} {
       font-size: {{ block.settings.heading_size | times: 0.6 }}px !important;
       padding: 0 4px !important;
     }
-
     .ai-glass-collection__description-{{ ai_gen_id }} {
       font-size: {{ block.settings.description_size | times: 0.85 }}px !important;
       padding: 0 4px !important;
     }
-
     .ai-glass-collection__header-{{ ai_gen_id }} {
       margin-bottom: {{ block.settings.header_spacing | times: 0.6 }}px !important;
       padding: 0 !important;
     }
-
-    /* Glass card mobile optimization */
     .ai-glass-collection__info-{{ ai_gen_id }} {
       padding: {{ block.settings.card_padding | times: 0.5 }}px !important;
-      border-radius: {{ block.settings.card_border_radius | times: 0.75 }}px !important;
+      border-radius: 16px !important;
       gap: 6px !important;
       {% if block.settings.card_position == 'absolute' %}
         bottom: {{ block.settings.card_vertical_position | times: 0.5 }}px !important;
@@ -394,86 +342,66 @@
         right: {{ block.settings.card_horizontal_position | times: 0.5 }}px !important;
       {% endif %}
     }
-
-    /* Product title mobile optimization */
     .ai-glass-collection__product-title-{{ ai_gen_id }} {
-      font-size: {{ block.settings.product_title_size | times: 0.7 }}px !important;
+      font-size: clamp(11px, {{ block.settings.product_title_size | times: 0.7 }}px, 2vw) !important;
       margin-bottom: {{ block.settings.title_price_spacing | times: 0.5 }}px !important;
       line-height: 1.2 !important;
       -webkit-line-clamp: 1 !important;
     }
-
-    /* Price mobile optimization */
     .ai-glass-collection__price-{{ ai_gen_id }} {
-      font-size: {{ block.settings.price_size | times: 0.7 }}px !important;
+      font-size: clamp(10px, {{ block.settings.price_size | times: 0.7 }}px, 2vw) !important;
     }
-
     .ai-glass-collection__compare-price-{{ ai_gen_id }} {
       font-size: {{ block.settings.price_size | times: 0.6 }}px !important;
     }
-
     .ai-glass-collection__price-wrapper-{{ ai_gen_id }} {
       gap: 4px !important;
     }
-
-    /* Add to cart button mobile optimization */
     .ai-glass-collection__add-to-cart-{{ ai_gen_id }} {
       width: {{ block.settings.atc_button_size | times: 0.75 }}px !important;
       height: {{ block.settings.atc_button_size | times: 0.75 }}px !important;
     }
-
     .ai-glass-collection__add-to-cart-{{ ai_gen_id }} svg {
       width: {{ block.settings.atc_icon_size | times: 0.75 }}px !important;
       height: {{ block.settings.atc_icon_size | times: 0.75 }}px !important;
     }
-
-    /* Badge mobile optimization */
     .ai-glass-collection__badge-{{ ai_gen_id }} {
-      font-size: {{ block.settings.badge_font_size | times: 0.8 }}px !important;
-      padding: {{ block.settings.badge_padding_vertical | times: 0.6 }}px {{ block.settings.badge_padding_horizontal | times: 0.6 }}px !important;
-      top: {{ block.settings.badge_position_top | times: 0.6 }}px !important;
-      right: {{ block.settings.badge_position_right | times: 0.6 }}px !important;
-      border-radius: {{ block.settings.badge_border_radius | times: 0.75 }}px !important;
+      font-size: {{ block.settings.badge_font_size | times: 0.85 }}px !important;
+      padding: {{ block.settings.badge_padding_vertical | times: 0.55 }}px {{ block.settings.badge_padding_horizontal | times: 0.55 }}px !important;
+      top: {{ block.settings.badge_position_top | times: 0.62 }}px !important;
+      right: {{ block.settings.badge_position_right | times: 0.62 }}px !important;
+      border-radius: 99px !important;
     }
-
-    /* Empty state mobile optimization */
     .ai-glass-collection__empty-{{ ai_gen_id }} {
       padding: 40px 12px !important;
       font-size: {{ block.settings.description_size | times: 0.85 }}px !important;
     }
   }
-
-  /* Extra small mobile devices */
+/* XSmall tweaks */
   @media screen and (max-width: 374px) {
     .ai-glass-collection-{{ ai_gen_id }} {
-      padding-left: 10px !important;
-      padding-right: 10px !important;
+      padding-left: 8px !important;
+      padding-right: 8px !important;
     }
-
     .ai-glass-collection__grid-{{ ai_gen_id }} {
       gap: 6px !important;
     }
-
     .ai-glass-collection__product-title-{{ ai_gen_id }} {
-      font-size: {{ block.settings.product_title_size | times: 0.6 }}px !important;
+      font-size: clamp(10px, {{ block.settings.product_title_size | times: 0.6 }}px, 1.2vw) !important;
     }
-
     .ai-glass-collection__price-{{ ai_gen_id }} {
-      font-size: {{ block.settings.price_size | times: 0.6 }}px !important;
+      font-size: clamp(9px, {{ block.settings.price_size | times: 0.6 }}px, 1.1vw) !important;
     }
-
     .ai-glass-collection__info-{{ ai_gen_id }} {
       padding: {{ block.settings.card_padding | times: 0.4 }}px !important;
     }
-
     .ai-glass-collection__add-to-cart-{{ ai_gen_id }} {
-      width: {{ block.settings.atc_button_size | times: 0.65 }}px !important;
-      height: {{ block.settings.atc_button_size | times: 0.65 }}px !important;
+      width: {{ block.settings.atc_button_size | times: 0.60 }}px !important;
+      height: {{ block.settings.atc_button_size | times: 0.60 }}px !important;
     }
-
     .ai-glass-collection__add-to-cart-{{ ai_gen_id }} svg {
-      width: {{ block.settings.atc_icon_size | times: 0.65 }}px !important;
-      height: {{ block.settings.atc_icon_size | times: 0.65 }}px !important;
+      width: {{ block.settings.atc_icon_size | times: 0.61 }}px !important;
+      height: {{ block.settings.atc_icon_size | times: 0.61 }}px !important;
     }
   }
 {% endstyle %}
@@ -528,13 +456,11 @@
                     </div>
                   {% endif %}
                 </div>
-
                 <div class="ai-glass-collection__info-{{ ai_gen_id }}">
                   <div class="ai-glass-collection__info-content-{{ ai_gen_id }}">
                     <h3 class="ai-glass-collection__product-title-{{ ai_gen_id }}">
                       {{ product.title }}
                     </h3>
-                    
                     <div class="ai-glass-collection__price-wrapper-{{ ai_gen_id }}">
                       {% if product.compare_at_price > product.price %}
                         <span class="ai-glass-collection__price-{{ ai_gen_id }} ai-glass-collection__price--sale-{{ ai_gen_id }}">
@@ -550,7 +476,6 @@
                       {% endif %}
                     </div>
                   </div>
-
                   {% if block.settings.show_atc_button and product.available %}
                     <button 
                       type="button"
@@ -588,13 +513,8 @@
   function aiGlassAddToCart{{ ai_gen_id }}(button) {
     const variantId = button.getAttribute('data-variant-id');
     const productTitle = button.getAttribute('data-product-title');
-    
     if (!variantId) return;
-
-    // Add loading state
     button.classList.add('is-loading');
-    
-    // Change icon to spinner
     button.innerHTML = `
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="32" fill="none"></circle>
@@ -613,13 +533,10 @@
       })
     })
     .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+      if (!response.ok) throw new Error('Network response was not ok');
       return response.json();
     })
     .then(data => {
-      // Success - show checkmark
       button.classList.remove('is-loading');
       button.classList.add('is-added');
       button.innerHTML = `
@@ -627,50 +544,24 @@
           <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
       `;
-
-      // Fetch updated cart and update Focal theme's cart-count elements
       fetch('/cart.js', {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      .then(res => res.json())
+        method: 'GET', headers: { 'Accept': 'application/json' }
+      }).then(res => res.json())
       .then(cart => {
-        // Update Focal theme's cart-count web component
-        const cartCountElements = document.querySelectorAll('cart-count');
-        cartCountElements.forEach(el => {
+        document.querySelectorAll('cart-count').forEach(el => {
           el.textContent = cart.item_count;
         });
-
-        // Also update any other common cart count selectors
-        const otherCartCounts = document.querySelectorAll('.header__cart-count, [data-cart-count], .cart-count-bubble span, .cart-count');
-        otherCartCounts.forEach(el => {
-          if (!el.tagName.toLowerCase().includes('cart-count')) {
-            el.textContent = cart.item_count;
-          }
-        });
-
-        // Dispatch custom events that Focal theme might listen for
-        document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', {
-          bubbles: true,
-          detail: { cart: cart }
-        }));
-
-        // Also try the standard Shopify Section Rendering API event
-        document.documentElement.dispatchEvent(new CustomEvent('cart:change', {
-          bubbles: true,
-          detail: { cart: cart }
-        }));
-
-        // Trigger Focal's cart notification if available
+        document.querySelectorAll('.header__cart-count, [data-cart-count], .cart-count-bubble span, .cart-count')
+          .forEach(el => {
+              if (!el.tagName.toLowerCase().includes('cart-count')) {
+                el.textContent = cart.item_count;
+              }
+          });
+        document.documentElement.dispatchEvent(new CustomEvent('cart:refresh',{bubbles:true,detail:{cart}}));
+        document.documentElement.dispatchEvent(new CustomEvent('cart:change',{bubbles:true,detail:{cart}}));
         const cartNotification = document.querySelector('cart-notification');
-        if (cartNotification && typeof cartNotification.show === 'function') {
-          cartNotification.show(data);
-        }
+        if (cartNotification && typeof cartNotification.show === 'function') { cartNotification.show(data); }
       });
-
-      // Reset button after 2 seconds
       setTimeout(() => {
         button.classList.remove('is-added');
         button.innerHTML = `
@@ -683,8 +574,6 @@
     })
     .catch(error => {
       console.error('Error adding to cart:', error);
-      
-      // Error - show X
       button.classList.remove('is-loading');
       button.innerHTML = `
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -692,8 +581,6 @@
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       `;
-
-      // Reset button after 2 seconds
       setTimeout(() => {
         button.innerHTML = `
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -831,68 +718,6 @@
       "label": "Spacing from image",
       "info": "Only applies when card is below image",
       "default": 16
-    },
-    {
-      "type": "color",
-      "id": "glass_background",
-      "label": "Background",
-      "default": "rgba(255, 255, 255, 0.1)"
-    },
-    {
-      "type": "range",
-      "id": "glass_blur",
-      "min": 0,
-      "max": 30,
-      "step": 2,
-      "unit": "px",
-      "label": "Blur intensity",
-      "default": 10
-    },
-    {
-      "type": "range",
-      "id": "glass_border_width",
-      "min": 0,
-      "max": 4,
-      "step": 1,
-      "unit": "px",
-      "label": "Border width",
-      "default": 1
-    },
-    {
-      "type": "color",
-      "id": "glass_border_color",
-      "label": "Border color",
-      "default": "rgba(255, 255, 255, 0.2)"
-    },
-    {
-      "type": "range",
-      "id": "card_border_radius",
-      "min": 0,
-      "max": 30,
-      "step": 2,
-      "unit": "px",
-      "label": "Border radius",
-      "default": 12
-    },
-    {
-      "type": "range",
-      "id": "card_padding",
-      "min": 10,
-      "max": 40,
-      "step": 2,
-      "unit": "px",
-      "label": "Padding",
-      "default": 20
-    },
-    {
-      "type": "range",
-      "id": "card_hover_lift",
-      "min": 0,
-      "max": 20,
-      "step": 2,
-      "unit": "px",
-      "label": "Hover lift",
-      "default": 4
     },
     {
       "type": "header",
