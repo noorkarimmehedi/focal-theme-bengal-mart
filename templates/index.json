@@ -241,6 +241,18 @@
       ],
       "settings": {}
     },
+    "scrolling_product_grid_EeEjBE": {
+      "type": "scrolling-product-grid",
+      "name": "Scrolling Product Grid",
+      "settings": {
+        "heading": "<p>let's<br/>scroll.</p>",
+        "collection": "all-products",
+        "featured_product": "",
+        "footer_text": "fin.",
+        "background_color": "#ffffff",
+        "text_color": "#000000"
+      }
+    },
     "17648559542cd3f5ce": {
       "type": "_blocks",
       "blocks": {
@@ -825,6 +837,7 @@
     "1764588401a77ff989",
     "1764769766ef4e34a8",
     "176474831120bb5e68",
+    "scrolling_product_grid_EeEjBE",
     "17648559542cd3f5ce",
     "1764777024d3c7920d",
     "176476843760369417",
