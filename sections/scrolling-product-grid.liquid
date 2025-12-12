@@ -40,6 +40,12 @@
     z-index: 0;
   }
 
+  @media (max-width: 768px) {
+    .scroll-section-{{ section.id }}::before {
+      --size: 30px;
+    }
+  }
+
   /* Header Section */
   .scroll-header-{{ section.id }} {
     min-height: 100vh;
@@ -53,13 +59,27 @@
     z-index: 1;
   }
 
+  @media (max-width: 768px) {
+    .scroll-header-{{ section.id }} {
+      padding-left: 1rem;
+      min-height: 60vh;
+    }
+  }
+
   .scroll-header-{{ section.id }} h1 {
-    font-size: clamp(3rem, 10vw, 8rem);
-    line-height: 0.6;
+    font-size: clamp(2.5rem, 10vw, 8rem);
+    line-height: 0.9;
     font-weight: 700;
     margin: 0;
     color: {{ section.settings.text_color }};
     font-family: 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif, system-ui;
+  }
+
+  @media (max-width: 768px) {
+    .scroll-header-{{ section.id }} h1 {
+      font-size: clamp(2rem, 12vw, 4rem);
+      line-height: 1;
+    }
   }
 
   /* Main Scrolling Section */
@@ -67,6 +87,12 @@
     min-height: 240vh;
     position: relative;
     z-index: 1;
+  }
+
+  @media (max-width: 768px) {
+    .scroll-main-{{ section.id }} {
+      min-height: 200vh;
+    }
   }
 
   .scroll-content-{{ section.id }} {
@@ -78,6 +104,12 @@
     position: sticky;
     top: 0;
     overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .scroll-content-{{ section.id }} {
+      min-height: 70vh;
+    }
   }
 
   /* Grid Layout */
@@ -100,10 +132,19 @@
   @media (max-width: 600px) {
     .scroll-grid-{{ section.id }} {
       grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, auto);
       --offset: -1;
+      gap: clamp(8px, 4vw, 20px);
     }
     .scroll-grid-{{ section.id }} > .layer:nth-of-type(1) {
       display: none;
+    }
+  }
+
+  @media (min-width: 601px) and (max-width: 1024px) {
+    .scroll-grid-{{ section.id }} {
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(15px, 5vw, 40px);
     }
   }
 
@@ -136,6 +177,31 @@
     grid-row: -1;
   }
 
+  @media (max-width: 600px) {
+    .scroll-grid-{{ section.id }} > .layer:nth-of-type(2) div:nth-of-type(1),
+    .scroll-grid-{{ section.id }} > .layer:nth-of-type(2) div:nth-of-type(2),
+    .scroll-grid-{{ section.id }} > .layer:nth-of-type(2) div:nth-of-type(3) {
+      grid-row: 1;
+    }
+    .scroll-grid-{{ section.id }} > .layer:nth-of-type(2) div:nth-of-type(4),
+    .scroll-grid-{{ section.id }} > .layer:nth-of-type(2) div:nth-of-type(5),
+    .scroll-grid-{{ section.id }} > .layer:nth-of-type(2) div:nth-of-type(6) {
+      display: none;
+    }
+    .scroll-grid-{{ section.id }} > .layer:nth-of-type(2) div:nth-of-type(1) {
+      grid-column: 1;
+    }
+    .scroll-grid-{{ section.id }} > .layer:nth-of-type(2) div:nth-of-type(2) {
+      grid-column: 3;
+    }
+    .scroll-grid-{{ section.id }} > .layer:nth-of-type(2) div:nth-of-type(3) {
+      display: none;
+    }
+    .scroll-grid-{{ section.id }} > .layer:nth-of-type(3) div {
+      display: none;
+    }
+  }
+
   /* Center Scaler */
   .scroll-grid-{{ section.id }} .scaler {
     position: relative;
@@ -156,6 +222,12 @@
     height: 100%;
   }
 
+  @media (max-width: 768px) {
+    .scroll-grid-{{ section.id }} .scaler img {
+      border-radius: 0.5rem;
+    }
+  }
+
   /* Product Images */
   .scroll-grid-{{ section.id }} .layer img {
     width: 100%;
@@ -163,6 +235,13 @@
     object-fit: cover;
     border-radius: 1rem;
     display: block;
+  }
+
+  @media (max-width: 768px) {
+    .scroll-grid-{{ section.id }} .layer img {
+      border-radius: 0.5rem;
+      aspect-ratio: 3 / 4;
+    }
   }
 
   .scroll-grid-{{ section.id }} .product-link {
@@ -181,12 +260,25 @@
     z-index: 1;
   }
 
+  @media (max-width: 768px) {
+    .scroll-footer-{{ section.id }} {
+      min-height: 50vh;
+      padding: 2rem 1rem;
+    }
+  }
+
   .scroll-footer-{{ section.id }} h2 {
     font-size: clamp(2rem, 6vw, 4rem);
     font-weight: 700;
     color: {{ section.settings.text_color }};
     margin: 0;
     font-family: 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif, system-ui;
+  }
+
+  @media (max-width: 768px) {
+    .scroll-footer-{{ section.id }} h2 {
+      font-size: clamp(1.5rem, 8vw, 3rem);
+    }
   }
 
   /* Animation Keyframes */
