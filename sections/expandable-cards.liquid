@@ -28,10 +28,17 @@
     padding: 1rem 0 2rem;
     margin: 0 auto;
     scroll-snap-type: x mandatory;
-    scroll-padding-left: 20%;
     -ms-overflow-style: none;
     scrollbar-width: none;
     perspective: 1000px;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    .expandable-cards-container {
+      justify-content: flex-start;
+      scroll-padding-left: 20%;
+    }
   }
 
   .expandable-cards-container::-webkit-scrollbar {
@@ -349,13 +356,14 @@
     const cards = container.querySelectorAll('.expandable-card');
     let selectedCard = null;
 
-    // Center scroll on load
-    if (container) {
+    // Center scroll on load for mobile only
+    if (container && window.innerWidth <= 768) {
       const scrollWidth = container.scrollWidth;
       const clientWidth = container.clientWidth;
       container.scrollLeft = (scrollWidth - clientWidth) / 2;
-      updateCardScales();
     }
+    
+    updateCardScales();
 
     // Function to update card scales based on position
     function updateCardScales() {
@@ -380,6 +388,9 @@
 
     // Update scales on scroll
     container.addEventListener('scroll', updateCardScales);
+
+    // Update on resize
+    window.addEventListener('resize', updateCardScales);
 
     cards.forEach(card => {
       const playBtn = card.querySelector('[data-play-btn]');
