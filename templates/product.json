@@ -16,8 +16,8 @@
           "type": "variant_picker",
           "settings": {
             "hide_sold_out_variants": false,
-            "selector_mode": "dropdown",
-            "color_mode": "color",
+            "selector_mode": "block",
+            "color_mode": "dropdown",
             "size_chart_page": ""
           }
         },
