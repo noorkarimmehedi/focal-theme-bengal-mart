@@ -15,7 +15,7 @@
     this.handle = Delegate.prototype.handle.bind(this);
     this._removedListeners = [];
   }
-  Delegate.prototype.root = function(root) {
+  Delegate.prototype.root = function (root) {
     const listenerMap = this.listenerMap;
     let eventType;
     if (this.rootElement) {
@@ -49,10 +49,10 @@
     }
     return this;
   };
-  Delegate.prototype.captureForType = function(eventType) {
+  Delegate.prototype.captureForType = function (eventType) {
     return ["blur", "error", "focus", "load", "resize", "scroll"].indexOf(eventType) !== -1;
   };
-  Delegate.prototype.on = function(eventType, selector, handler, useCapture) {
+  Delegate.prototype.on = function (eventType, selector, handler, useCapture) {
     let root;
     let listenerMap;
     let matcher;
@@ -100,7 +100,7 @@
     });
     return this;
   };
-  Delegate.prototype.off = function(eventType, selector, handler, useCapture) {
+  Delegate.prototype.off = function (eventType, selector, handler, useCapture) {
     let i;
     let listener;
     let listenerMap;
@@ -144,7 +144,7 @@
     }
     return this;
   };
-  Delegate.prototype.handle = function(event) {
+  Delegate.prototype.handle = function (event) {
     let i;
     let l;
     const type = event.type;
@@ -221,7 +221,7 @@
     }
     return ret;
   };
-  Delegate.prototype.fire = function(event, target, listener) {
+  Delegate.prototype.fire = function (event, target, listener) {
     return listener.handler.call(target, event, target);
   };
   function matchesTag(tagName, element) {
@@ -236,7 +236,7 @@
   function matchesId(id, element) {
     return id === element.id;
   }
-  Delegate.prototype.destroy = function() {
+  Delegate.prototype.destroy = function () {
     this.off();
     this.root();
   };
@@ -335,7 +335,7 @@
   // node_modules/tabbable/dist/index.esm.js
   var candidateSelectors = ["input", "select", "textarea", "a[href]", "button", "[tabindex]", "audio[controls]", "video[controls]", '[contenteditable]:not([contenteditable="false"])', "details>summary:first-of-type", "details"];
   var candidateSelector = /* @__PURE__ */ candidateSelectors.join(",");
-  var matches = typeof Element === "undefined" ? function() {
+  var matches = typeof Element === "undefined" ? function () {
   } : Element.prototype.matches || Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
   var getCandidates = function getCandidates2(el, includeContainer, filter) {
     var candidates = Array.prototype.slice.apply(el.querySelectorAll(candidateSelector));
@@ -371,7 +371,7 @@
     return isInput(node) && node.type === "hidden";
   };
   var isDetailsWithSummary = function isDetailsWithSummary2(node) {
-    var r = node.tagName === "DETAILS" && Array.prototype.slice.apply(node.children).some(function(child) {
+    var r = node.tagName === "DETAILS" && Array.prototype.slice.apply(node.children).some(function (child) {
       return child.tagName === "SUMMARY";
     });
     return r;
@@ -471,7 +471,7 @@
     var regularTabbables = [];
     var orderedTabbables = [];
     var candidates = getCandidates(el, options.includeContainer, isNodeMatchingSelectorTabbable.bind(null, options));
-    candidates.forEach(function(candidate, i) {
+    candidates.forEach(function (candidate, i) {
       var candidateTabindex = getTabindex(candidate);
       if (candidateTabindex === 0) {
         regularTabbables.push(candidate);
@@ -483,7 +483,7 @@
         });
       }
     });
-    var tabbableNodes = orderedTabbables.sort(sortOrderedTabbables).map(function(a) {
+    var tabbableNodes = orderedTabbables.sort(sortOrderedTabbables).map(function (a) {
       return a.node;
     }).concat(regularTabbables);
     return tabbableNodes;
@@ -506,7 +506,7 @@
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly) {
-        symbols = symbols.filter(function(sym) {
+        symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       }
@@ -518,13 +518,13 @@
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
       if (i % 2) {
-        ownKeys(Object(source), true).forEach(function(key) {
+        ownKeys(Object(source), true).forEach(function (key) {
           _defineProperty(target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
         Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
       } else {
-        ownKeys(Object(source)).forEach(function(key) {
+        ownKeys(Object(source)).forEach(function (key) {
           Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
         });
       }
@@ -544,7 +544,7 @@
     }
     return obj;
   }
-  var activeFocusTraps = function() {
+  var activeFocusTraps = function () {
     var trapQueue = [];
     return {
       activateTrap: function activateTrap(trap) {
@@ -587,7 +587,7 @@
   };
   var findIndex = function findIndex2(arr, fn) {
     var idx = -1;
-    arr.every(function(value, i) {
+    arr.every(function (value, i) {
       if (fn(value)) {
         idx = i;
         return false;
@@ -626,7 +626,7 @@
       return configOverrideOptions && configOverrideOptions[optionName] !== void 0 ? configOverrideOptions[optionName] : config[configOptionName || optionName];
     };
     var containersContain = function containersContain2(element) {
-      return !!(element && state.containers.some(function(container) {
+      return !!(element && state.containers.some(function (container) {
         return container.contains(element);
       }));
     };
@@ -673,7 +673,7 @@
       return node;
     };
     var updateTabbableNodes = function updateTabbableNodes2() {
-      state.tabbableGroups = state.containers.map(function(container) {
+      state.tabbableGroups = state.containers.map(function (container) {
         var tabbableNodes = tabbable(container);
         if (tabbableNodes.length > 0) {
           return {
@@ -683,7 +683,7 @@
           };
         }
         return void 0;
-      }).filter(function(group) {
+      }).filter(function (group) {
         return !!group;
       });
       if (state.tabbableGroups.length <= 0 && !getNodeForOption("fallbackFocus")) {
@@ -746,7 +746,7 @@
       updateTabbableNodes();
       var destinationNode = null;
       if (state.tabbableGroups.length > 0) {
-        var containerIndex = findIndex(state.tabbableGroups, function(_ref) {
+        var containerIndex = findIndex(state.tabbableGroups, function (_ref) {
           var container = _ref.container;
           return container.contains(target);
         });
@@ -757,7 +757,7 @@
             destinationNode = state.tabbableGroups[0].firstTabbableNode;
           }
         } else if (e.shiftKey) {
-          var startOfGroupIndex = findIndex(state.tabbableGroups, function(_ref2) {
+          var startOfGroupIndex = findIndex(state.tabbableGroups, function (_ref2) {
             var firstTabbableNode = _ref2.firstTabbableNode;
             return target === firstTabbableNode;
           });
@@ -770,7 +770,7 @@
             destinationNode = destinationGroup.lastTabbableNode;
           }
         } else {
-          var lastOfGroupIndex = findIndex(state.tabbableGroups, function(_ref3) {
+          var lastOfGroupIndex = findIndex(state.tabbableGroups, function (_ref3) {
             var lastTabbableNode = _ref3.lastTabbableNode;
             return target === lastTabbableNode;
           });
@@ -821,7 +821,7 @@
         return;
       }
       activeFocusTraps.activateTrap(trap);
-      state.delayInitialFocusTimer = config.delayInitialFocus ? delay(function() {
+      state.delayInitialFocusTimer = config.delayInitialFocus ? delay(function () {
         tryFocus(getInitialFocusNode());
       }) : tryFocus(getInitialFocusNode());
       doc.addEventListener("focusin", checkFocusIn, true);
@@ -905,7 +905,7 @@
         }
         var returnFocus = getOption(deactivateOptions, "returnFocus", "returnFocusOnDeactivate");
         var finishDeactivation = function finishDeactivation2() {
-          delay(function() {
+          delay(function () {
             if (returnFocus) {
               tryFocus(getReturnFocusNode(state.nodeFocusedBeforeActivation));
             }
@@ -940,7 +940,7 @@
       },
       updateContainerElements: function updateContainerElements(containerElements) {
         var elementsAsArray = [].concat(containerElements).filter(Boolean);
-        state.containers = elementsAsArray.map(function(element) {
+        state.containers = elementsAsArray.map(function (element) {
           return typeof element === "string" ? doc.querySelector(element) : element;
         });
         if (state.active) {
@@ -2364,15 +2364,17 @@
       this.flickity = new Promise(async (resolve) => {
         await LibraryLoader.load("flickity");
         await this.untilVisible({ rootMargin: "400px", threshold: 0 });
-        const flickityInstance = new window.ThemeFlickity(this, { ...this.flickityConfig, ...{
-          rightToLeft: window.themeVariables.settings.direction === "rtl",
-          accessibility: MediaFeatures.supportsHover(),
-          on: {
-            ready: (event) => triggerEvent(this, "flickity:ready", event),
-            change: (event) => triggerEvent(this, "flickity:slide-changed", event),
-            settle: (event) => triggerEvent(this, "flickity:slide-settled", event)
+        const flickityInstance = new window.ThemeFlickity(this, {
+          ...this.flickityConfig, ...{
+            rightToLeft: window.themeVariables.settings.direction === "rtl",
+            accessibility: MediaFeatures.supportsHover(),
+            on: {
+              ready: (event) => triggerEvent(this, "flickity:ready", event),
+              change: (event) => triggerEvent(this, "flickity:slide-changed", event),
+              settle: (event) => triggerEvent(this, "flickity:slide-settled", event)
+            }
           }
-        } });
+        });
         resolve(flickityInstance);
       });
       if (this.hasAttribute("click-nav")) {
@@ -3225,25 +3227,25 @@
       switch (transitionType) {
         case "sweep":
           animation = new CustomAnimation(new SequenceEffect([
-            new CustomKeyframeEffect(this, { visibility: ["visible", "hidden"] }, { duration: 800 }),
+            new CustomKeyframeEffect(this, { visibility: ["visible", "hidden"] }, { duration: 1200 }),
             new ParallelEffect(textElements.map((item) => {
               return new CustomKeyframeEffect(item, { opacity: [1, 0], visibility: ["visible", "hidden"] });
             }))
           ]));
           break;
         case "fade":
-          animation = new CustomAnimation(new CustomKeyframeEffect(this, { opacity: [1, 0], visibility: ["visible", "hidden"] }, { duration: 500, easing: "ease-in-out" }));
+          animation = new CustomAnimation(new CustomKeyframeEffect(this, { opacity: [1, 0], visibility: ["visible", "hidden"] }, { duration: 800, easing: "ease-in-out" }));
           break;
         case "reveal":
           animation = new CustomAnimation(new SequenceEffect([
             new ParallelEffect(textElements.reverse().map((item) => {
-              return new CustomKeyframeEffect(item, { opacity: [1, 0], visibility: ["visible", "hidden"] }, { duration: 500, easing: "ease-in-out" });
+              return new CustomKeyframeEffect(item, { opacity: [1, 0], visibility: ["visible", "hidden"] }, { duration: 800, easing: "ease-in-out" });
             })),
             new ParallelEffect(imageElements.map((item) => {
               if (!item.classList.contains("slideshow__image-wrapper--secondary")) {
-                return new CustomKeyframeEffect(item, { visibility: ["visible", "hidden"], clipPath: ["inset(0 0 0 0)", "inset(0 0 100% 0)"] }, { duration: 800, easing: "cubic-bezier(0.645, 0.045, 0.355, 1)" });
+                return new CustomKeyframeEffect(item, { visibility: ["visible", "hidden"], clipPath: ["inset(0 0 0 0)", "inset(0 0 100% 0)"] }, { duration: 1200, easing: "cubic-bezier(0.645, 0.045, 0.355, 1)" });
               } else {
-                return new CustomKeyframeEffect(item, { visibility: ["visible", "hidden"], clipPath: ["inset(0 0 0 0)", "inset(100% 0 0 0)"] }, { duration: 800, easing: "cubic-bezier(0.645, 0.045, 0.355, 1)" });
+                return new CustomKeyframeEffect(item, { visibility: ["visible", "hidden"], clipPath: ["inset(0 0 0 0)", "inset(100% 0 0 0)"] }, { duration: 1200, easing: "cubic-bezier(0.645, 0.045, 0.355, 1)" });
               }
             }))
           ]));
@@ -3261,26 +3263,26 @@
       switch (transitionType) {
         case "sweep":
           animation = new CustomAnimation(new SequenceEffect([
-            new CustomKeyframeEffect(this, { visibility: ["hidden", "visible"], clipPath: reverseDirection ? ["inset(0 100% 0 0)", "inset(0 0 0 0)"] : ["inset(0 0 0 100%)", "inset(0 0 0 0)"] }, { duration: 800, easing: "cubic-bezier(0.645, 0.045, 0.355, 1)" }),
+            new CustomKeyframeEffect(this, { visibility: ["hidden", "visible"], clipPath: reverseDirection ? ["inset(0 100% 0 0)", "inset(0 0 0 0)"] : ["inset(0 0 0 100%)", "inset(0 0 0 0)"] }, { duration: 1200, easing: "cubic-bezier(0.645, 0.045, 0.355, 1)" }),
             new ParallelEffect(textElements.map((item, index) => {
-              return new CustomKeyframeEffect(item, { opacity: [0, 1], visibility: ["hidden", "visible"], clipPath: ["inset(0 0 100% 0)", "inset(0 0 0 0)"], transform: ["translateY(30px)", "translateY(0)"] }, { duration: 800, delay: 100 * index, easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)" });
+              return new CustomKeyframeEffect(item, { opacity: [0, 1], visibility: ["hidden", "visible"], clipPath: ["inset(0 0 100% 0)", "inset(0 0 0 0)"], transform: ["translateY(30px)", "translateY(0)"] }, { duration: 1200, delay: 150 * index, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
             }))
           ]));
           break;
         case "fade":
-          animation = new CustomAnimation(new CustomKeyframeEffect(this, { opacity: [0, 1], visibility: ["hidden", "visible"] }, { duration: 500, easing: "ease-in-out" }));
+          animation = new CustomAnimation(new CustomKeyframeEffect(this, { opacity: [0, 1], visibility: ["hidden", "visible"] }, { duration: 800, easing: "ease-in-out" }));
           break;
         case "reveal":
           animation = new CustomAnimation(new SequenceEffect([
             new ParallelEffect(imageElements.map((item) => {
               if (!item.classList.contains("slideshow__image-wrapper--secondary")) {
-                return new CustomKeyframeEffect(item, { visibility: ["hidden", "visible"], clipPath: ["inset(0 0 100% 0)", "inset(0 0 0 0)"] }, { duration: 800, delay: 100, easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)" });
+                return new CustomKeyframeEffect(item, { visibility: ["hidden", "visible"], clipPath: ["inset(0 0 100% 0)", "inset(0 0 0 0)"] }, { duration: 1200, delay: 100, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
               } else {
-                return new CustomKeyframeEffect(item, { visibility: ["hidden", "visible"], clipPath: ["inset(100% 0 0 0)", "inset(0 0 0 0)"] }, { duration: 800, delay: 100, easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)" });
+                return new CustomKeyframeEffect(item, { visibility: ["hidden", "visible"], clipPath: ["inset(100% 0 0 0)", "inset(0 0 0 0)"] }, { duration: 1200, delay: 100, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
               }
             })),
             new ParallelEffect(textElements.map((item, index) => {
-              return new CustomKeyframeEffect(item, { opacity: [0, 1], visibility: ["hidden", "visible"], clipPath: ["inset(0 0 100% 0)", "inset(0 0 0 0)"], transform: ["translateY(30px)", "translateY(0)"] }, { duration: 800, delay: 100 * index, easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)" });
+              return new CustomKeyframeEffect(item, { opacity: [0, 1], visibility: ["hidden", "visible"], clipPath: ["inset(0 0 100% 0)", "inset(0 0 0 0)"], transform: ["translateY(30px)", "translateY(0)"] }, { duration: 1200, delay: 150 * index, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
             }))
           ]));
           break;
@@ -6326,7 +6328,7 @@
     });
   })();
   (() => {
-    document.addEventListener("keyup", function(event) {
+    document.addEventListener("keyup", function (event) {
       if (event.key === "Tab") {
         document.body.classList.remove("no-focus-outline");
         document.body.classList.add("focus-outline");
