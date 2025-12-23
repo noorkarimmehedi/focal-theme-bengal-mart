@@ -139,7 +139,7 @@
     "ai_gen_block_eb7330a_WUFPnM": {
       "type": "ai_gen_block_eb7330a",
       "settings": {
-        "collection": "frontpage",
+        "collection": "best-sellers",
         "products_to_show": 8,
         "show_header": true,
         "heading": "Featured Collection",
