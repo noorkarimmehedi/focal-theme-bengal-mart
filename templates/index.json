@@ -15,6 +15,7 @@
         "slide-1": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/4.webp",
             "text_position": "middle_center",
             "subheading": "",
             "title": "",
@@ -52,7 +53,6 @@
         "slide-1",
         "slide-2"
       ],
-      "disabled": true,
       "settings": {
         "section_height": "auto",
         "transition_type": "sweep",
@@ -63,11 +63,13 @@
     },
     "ai_gen_block_b013182_83hmUk": {
       "type": "ai_gen_block_b013182",
+      "disabled": true,
       "settings": {
         "heading": "",
         "subheading": "<p>Vastramay brings India’s culture alive with stylish, comfortable ethnic wear for all.</p>",
         "button_label": "Shop Now",
         "button_link": "shopify://products/rosetta-sari",
+        "background_image": "shopify://shop_images/4.webp",
         "placeholder_color": "#f3f3f3",
         "overlay_color": "#000000",
         "overlay_opacity": 10,
@@ -150,6 +152,7 @@
         },
         "collection_tiHRUM": {
           "type": "collection",
+          "disabled": true,
           "settings": {
             "collection": "",
             "label": "",
@@ -473,6 +476,7 @@
         "category_MLU7Tz": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/1.webp",
             "title": "Women's Fashion",
             "tag": "Trending",
             "link": ""
