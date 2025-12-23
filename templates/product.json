@@ -51,7 +51,7 @@
         "help_page": "",
         "enable_video_autoplay": true,
         "enable_video_looping": false,
-        "enable_image_zoom": true,
+        "enable_image_zoom": false,
         "show_thumbnails_on_mobile": false,
         "desktop_thumbnails_position": "bottom",
         "transition_effect": "slide"
